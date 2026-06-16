@@ -48,7 +48,7 @@ operating systems including FreeRTOS and RTEMS.
   *revocation sweeps* to accurately and efficiently locate and
   overwrite any capabilities implementing stale pointers.
   On application cores, architectural support includes MMU features to allow
-  the tracking of "capability versions" of pages (a la loadside
+  the tracking of "capability versions" of pages (à la loadside
   garbage-collection techniques), and on microcontroller cores, direct
   revocation bits may be stored directly in SRAM.
   Spatial safety ensures that pointers cannot be used to reference other
