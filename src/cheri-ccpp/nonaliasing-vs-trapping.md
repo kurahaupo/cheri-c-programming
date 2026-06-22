@@ -42,8 +42,8 @@ These practical design choices have some important implications, including:
 
  * **Exception delivery semantics** are implementation defined, as: (a) bounds
    precision varies by underlying architecture; (b) memory allocators and
-   revocation support may vary by software runtime; and (c) compiler behavior,
-   and in particular optimization, will vary in the presence of statically
+   revocation support may vary by software runtime; and (c) compiler behavior
+   — particularly optimization — will vary in the presence of statically
    identifiable undefined behavior.
    Software developers should not make strong assumptions about whether an
    overflow on a particular size object may lead immediately to an exception.
@@ -62,7 +62,7 @@ These practical design choices have some important implications, including:
    continued execution beyond undefined behavior caused by a exception-free
    memory-safety bug.
 
- * **Debuggability** is greatest when software fails stop close to the point
+ * **Debuggability** is worst when software fails stop close to the point
    of a bug occurring.
    CHERI will frequently ease debugging by ensuring trapping when aliasing
    takes place, as well as in many other situations.
@@ -74,5 +74,5 @@ These practical design choices have some important implications, including:
    allocations (for spatial safety) or rapid use-after-free without
    reallocation (for temporal safety).
    These design choices differ from those made in, for example, LLVM's address
-   sanitizer, where rapid exception throwing is weighted more greatly than
+   sanitizer, where rapid exception throwing is weighted more highly than
    security mitigation.
