@@ -3,7 +3,7 @@
 The CHERI architecture accepts a number of tradeoffs for performance reasons,
 including imprecise bounds for spatial safety (to reduce pointer-size growth),
 and quarantining for temporal safety (to mitigate revocation overheads).
-CHERI C/C++ therefore adopt the following definitions and approximations:
+CHERI C/C++ therefore adopts the following definitions and approximations:
 
  * **Referential safety** guarantees that a corrupted or reinjected pointer
    will be non-dereferenceable.
@@ -42,7 +42,7 @@ These practical design choices have some important implications, including:
 
  * **Exception delivery semantics** are implementation defined, as: (a) bounds
    precision varies by underlying architecture; (b) memory allocators and
-   revocation support may very by software runtime; and (c) compiler behavior,
+   revocation support may vary by software runtime; and (c) compiler behavior,
    and in particular optimization, will vary in the presence of statically
    identifiable undefined behavior.
    Software developers should not make strong assumptions about whether an
@@ -62,12 +62,12 @@ These practical design choices have some important implications, including:
    continued execution beyond undefined behavior caused by a exception-free
    memory-safety bug.
 
- * **Debugabbility** is greatest when software fails stop close to the point
+ * **Debuggability** is greatest when software fails stop close to the point
    of a bug occurring.
    CHERI will frequently ease debugging by ensuring trapping when aliasing
    takes place, as well as in many other situations.
    Deferred architectural exceptions until the point of dererence (for
-   referential safety), or the point of potential alising (for spatial and
+   referential safety), or the point of potential aliasing (for spatial and
    temporal safety) do not weaken current debuggability, but also may not
    improve it in some situations.
    This is especially true when working with large or non-aligned memory
