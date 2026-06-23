@@ -40,7 +40,7 @@ situations:
   It is therefore important that a suitable type be used to hold pointers.
 
   This pattern often occurs where an opaque field exists in a data structure
-  &mdash; e.g., a `long_t` argument to a callback in older C code &mdash; that
+  &mdash; e.g., a `long` argument to a callback in older C code &mdash; that
   needs to be changed to use a capability-oblivious type such as `intptr_t`.
 
 <!--
