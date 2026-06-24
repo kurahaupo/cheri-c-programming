@@ -15,23 +15,27 @@ recommendations:
 
 * **`ptraddr_t`**: This is a new integer type introduced by CHERI C and should be
   used to hold addresses.
-  `ptraddr_t` should not be directly cast to a pointer type for
-  dereference; instead, it must be combined with an existing valid capability
-  to the address space to generate a dereferenceable pointer.
-  Typically, this is done using the `cheri_address_set(c, x)` function.
+  An `ptraddr_t` value is an address without a capability, meaning that when
+  cast to a pointer, the result will not be dereferenceable.
+  Instead, it must be combined with an existing valid capability to generate a
+  dereferenceable pointer. Typically, this is done using the
+  `cheri_address_set(c, p)` function.
 
 * **`size_t`, `ssize_t`**: These integer types should be used
   to hold the unsigned or signed lengths of regions of address space.
 <!--
-  \arnote{\sizet not necessary the same as unsigned `ptrdiff_t`.}
+  \arnote{`ssize_t` is not necessarily the same as `ptrdiff_t`.}
 -->
 
-* **`ptrdiff_t`**: This integer type describes the difference of indices
-  between two pointers to elements of the same array, and should not be used
-  for any other purpose.
-  It can be added to a pointer to obtain a new pointer, but the result will
-  be dereferenceable only if the address lies within the bounds of the
-  pointer from which it was derived.
+* **`ptrdiff_t`**: This signed integer type describes the difference of indices
+  between pointers to any two elements within one array; this implies it can
+  also hold the size of an object (or its negation), though `size_t` and
+  `ssize_t` are _strongly_ preferred for these uses.
+  It should not be used for any other purpose.
+
+  A `ptrdiff_t` value can be added to a pointer to obtain a new pointer, but
+  the result will be dereferenceable only if the address lies within the bounds
+  of the pointer from which it was derived.
 
   <!--
   \note{Isn't that last sentence true of any combination?}{nwf}
@@ -43,9 +47,9 @@ recommendations:
   When porting code, it is worthwhile to audit use of `ptrdiff_t`.
 
   <!--
-  \note{Should we recommend that \sizet be used to hold lengths of
-  allocations and \ptrdifft be used to talk about spans of
-  address space (e.g., the offsets between two subobjects of an allocation)?  I feel
+  \note{Should we recommend that `size_t` be used to hold lengths of
+  allocations and `ptrdiff_t` be used to talk about spans of address space
+  (e.g., the offsets between two subobjects of an allocation)?  I feel
   like the recommendations here are not as concrete as I'd like.}{nwf}
   -->
 
@@ -62,6 +66,12 @@ recommendations:
   to place a pointer value in an integer type for the purposes of arithmetic
   (which takes place on the capability's address and in units of bytes, as if
   the pointer had been cast to `char *`).
+
+  <!--
+  \note{Being able to perform arithmetic on an arbitrary pointer is dependent
+  on pointers encoding a flat (preferably non-Harvard) address space. This is
+  not always true.}
+  -->
 
   The observable, integer range of a `uintptr_t` is the same as
   that of a `ptraddr_t` (or `ptrdiff_t` for `intptr_t`), despite the increased
